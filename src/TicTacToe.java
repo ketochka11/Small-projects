@@ -26,21 +26,29 @@ public class TicTacToe {
                 playerPlace = sc.nextInt();
             }
 
-
-            System.out.println(playerPlace);
             placeSymbol(gameBoard, playerPlace, "player");
+            String res = checkWin();
+            if (res.length() > 0) {
+                System.out.println(res);
+                break;
+            }
 
             Random rnd = new Random();
             int compPlace = rnd.nextInt(9) + 1;
             while (playerPlaces.contains(compPlace) ||
                     compPlaces.contains(compPlace)) {
-                System.out.println("Вы ввели неправильную позицию. Повторите ввод.");
                 compPlace = rnd.nextInt(9) + 1;
             }
+
             placeSymbol(gameBoard, compPlace, "comp");
+
             printGameBoard(gameBoard);
-            String res = checkWin();
-            System.out.println(res);
+
+            res = checkWin();
+            if (res.length() > 0) {
+                System.out.println(res);
+                break;
+            }
         }
 
     }
@@ -119,9 +127,9 @@ public class TicTacToe {
         win.add(cross2);
 
         for (List l : win) {
-            if (playerPlaces.contains(l)) {
+            if (playerPlaces.containsAll(l)) {
                 return "Вы выиграли!!!";
-            } else if (compPlaces.contains(l)) {
+            } else if (compPlaces.containsAll(l)) {
                 return "Вы проиграли";
             } else if ((playerPlaces.size() + compPlaces.size()) == 9) {
                 return "Ничья";
